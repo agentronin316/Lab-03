@@ -15,9 +15,32 @@ public class MonsterEditor : Editor
         monsterScript = (Monster)target;
     }
 
-    void OnInspectorGUI()
+    public override void OnInspectorGUI()
     {
         visibleRange = EditorGUILayout.Foldout(visibleRange, "Visibility Settings");
+        if(visibleRange)
+        {
+            EditorGUI.indentLevel++;
+            monsterScript.VariableVisibleTime = EditorGUILayout.Toggle("Variable Visible Time?", monsterScript.VariableVisibleTime);
+            if (monsterScript.VariableVisibleTime)
+            {
+                EditorGUILayout.LabelField("Minimum - Maximum Time");
+                EditorGUILayout.BeginHorizontal();
+                monsterScript.VisibleTimeMin = EditorGUILayout.FloatField(monsterScript.VisibleTimeMin);
+                monsterScript.VisibleTimeMax = EditorGUILayout.FloatField(monsterScript.VisibleTimeMax);
+                EditorGUILayout.EndHorizontal();
+
+            }
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel("Visible Time:");
+                monsterScript.VisibleTimeMax = EditorGUILayout.FloatField(monsterScript.VisibleTimeMax);
+                EditorGUILayout.EndHorizontal();
+            }
+            EditorGUI.indentLevel--;
+        }
+        EditorGUILayout.Space();
 
         transitionRange = EditorGUILayout.Foldout(transitionRange, "Transition Settings");
 
