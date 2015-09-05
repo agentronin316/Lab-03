@@ -40,11 +40,49 @@ public class MonsterEditor : Editor
             }
             EditorGUI.indentLevel--;
         }
+
         EditorGUILayout.Space();
 
         transitionRange = EditorGUILayout.Foldout(transitionRange, "Transition Settings");
+        if(transitionRange)
+        {
+            EditorGUI.indentLevel++;
+            monsterScript.VariableTransitionTime = EditorGUILayout.Toggle("Variable Transmission Time?", monsterScript.VariableTransitionTime);
+
+            if(monsterScript.VariableTransitionTime)
+            {
+                EditorGUILayout.LabelField("Minimum - Maximum Time");
+                EditorGUILayout.BeginHorizontal();
+                monsterScript.TransitionTimeMin = EditorGUILayout.FloatField(monsterScript.TransitionTimeMin);
+                monsterScript.TransitionTimeMax = EditorGUILayout.FloatField(monsterScript.TransitionTimeMax);
+                EditorGUILayout.EndHorizontal();
+            }
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel("Transition Time:");
+                monsterScript.TransitionTimeMax = EditorGUILayout.FloatField(monsterScript.TransitionTimeMax);
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUILayout.Space();
 
         spawnTypes = EditorGUILayout.Foldout(spawnTypes, "Spawn Settings");
+        if(spawnTypes)
+        {
+            EditorGUI.indentLevel++;
+            serializedObject.Update();
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("possibleTypes"), true);
+            EditorGUI.indentLevel--;
+        }
 
+        EditorGUILayout.Space();
+
+        monsterScript.PointWorth = EditorGUILayout.IntField("Point Value: ", monsterScript.PointWorth);
+
+        serializedObject.ApplyModifiedProperties();
     }
 }
