@@ -29,7 +29,7 @@ public enum HealingPickups
 }
 
 [System.Serializable]
-public class ObjectTypes : MonoBehaviour
+public class ObjectTypes
 {
 
     public ObjectType type;
