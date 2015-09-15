@@ -45,31 +45,53 @@ public class ObjectTypesDrawer : PropertyDrawer
                 break;
             case ObjectType.DAMAGING:
                 float offset = position.x;
-                Rect damageTypeLableRect = new Rect(offset, position.y + 17, 35f, 17f);
+                Rect damageTypeLableRect = new Rect(offset, position.y + 17, 35f, 15f);
                 offset += 35;
                 EditorGUI.LabelField(damageTypeLableRect, "Type");
 
-                Rect damageTypeRect = new Rect(offset, position.y + 17, position.width / 3, 17f);
+                Rect damageTypeRect = new Rect(offset, position.y + 17, position.width / 3, 15f);
                 offset += position.width / 3;
                 EditorGUI.PropertyField(damageTypeRect, damageType, GUIContent.none);
 
-                Rect damageAmountLableRect = new Rect(offset, position.y +17, 55f, 17f);
+                Rect damageAmountLableRect = new Rect(offset, position.y +17, 55f, 15f);
                 offset += 55;
                 EditorGUI.LabelField(damageAmountLableRect, "Amount");
 
-                Rect damageAmountRect = new Rect(offset, position.y + 17, position.width / 3, 17f);
+                Rect damageAmountRect = new Rect(offset, position.y + 17, position.width / 3, 15f);
                 EditorGUI.PropertyField(damageAmountRect, damageAmount, GUIContent.none);
                 break;
             case ObjectType.HEALING:
                 break;
             case ObjectType.PASSABLE:
+                Rect feedback = new Rect(position.x, position.y + 17, position.width, 15f);
+                EditorGUI.LabelField(feedback, "There are no settings for a passable object.");
                 break;
             case ObjectType.SOLID:
-                Rect shouldMove = new Rect(position.x, position.y + 17, position.width, 17f);
+                Rect shouldMove = new Rect(position.x, position.y + 17, position.width, 15f);
                 int index = solidMoving.boolValue ? 0 : 1;
                 string[] options = new string[] { "Yes", "No" };
                 index = EditorGUI.Popup(shouldMove, "Should it move?", index, options);
                 solidMoving.boolValue = (index == 0) ? true : false;
+
+                if (solidMoving.boolValue)
+                {
+                    float offsets = position.x;
+                    Rect startRect = new Rect(offsets, position.y + 34, position.width / 2, 15f);
+                    offsets += position.width / 2;
+                    EditorGUI.LabelField(startRect, "Start Point");
+
+                    startRect = new Rect(offsets, position.y + 34, position.width / 2, 15f);
+                    EditorGUI.LabelField(startRect, "End Point");
+
+                    offsets = position.x;
+                    startRect = new Rect(offsets, position.y + 51, position.width / 2, 15f);
+                    offsets += position.width / 2;
+                    EditorGUI.PropertyField(startRect, solidStart, GUIContent.none);
+
+                    startRect = new Rect(offsets, position.y + 51, position.width / 2, 15f);
+                    EditorGUI.PropertyField(startRect, solidEnd, GUIContent.none);
+                }
+
                 break;
 
         }
