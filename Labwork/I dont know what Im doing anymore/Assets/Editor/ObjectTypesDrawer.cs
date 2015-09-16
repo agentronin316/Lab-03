@@ -40,7 +40,7 @@ public class ObjectTypesDrawer : PropertyDrawer
         switch ((ObjectType)objectType.enumValueIndex)
         {
             case ObjectType.BREAKABLE:
-                Rect breakableRect = new Rect(position.x, position.y, position.width, 15f);
+                Rect breakableRect = new Rect(position.x, position.y + 17, position.width, 15f);
                 EditorGUI.PropertyField(breakableRect, breakablePoints);
                 break;
             case ObjectType.DAMAGING:
@@ -61,6 +61,28 @@ public class ObjectTypesDrawer : PropertyDrawer
                 EditorGUI.PropertyField(damageAmountRect, damageAmount, GUIContent.none);
                 break;
             case ObjectType.HEALING:
+                float offseth = 195;
+                Rect lableRect = new Rect(position.x, position.y + 17, offseth, 15f);
+                EditorGUI.LabelField(lableRect, "This item will heal the player's");
+
+                Rect healthSelect = new Rect(position.x + offseth, position.y + 17, 90f, 15f);
+                EditorGUI.PropertyField(healthSelect, healingType, GUIContent.none, true);
+                offseth += 90f;
+                
+                lableRect = new Rect(position.x + offseth, position.y + 17, 35f, 15f);
+                EditorGUI.LabelField(lableRect, "by");
+                offseth += 35f;
+
+                lableRect = new Rect(position.x + offseth, position.y + 17, 70f, 15f);
+                EditorGUI.PropertyField(lableRect, healingAmount, GUIContent.none);
+                offseth += 70f;
+
+                lableRect = new Rect(position.x + offseth, position.y + 17, 90f, 15f);
+                EditorGUI.LabelField(lableRect, "on");
+
+                lableRect = new Rect(position.x, position.y + 34, 100f, 15f);
+                EditorGUI.PropertyField(lableRect, healingPickupType, GUIContent.none, true);
+
                 break;
             case ObjectType.PASSABLE:
                 Rect feedback = new Rect(position.x, position.y + 17, position.width, 15f);
